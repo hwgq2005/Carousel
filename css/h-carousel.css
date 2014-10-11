@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/* *
+*
+* @authors H君(262281610@qq.com)
+* @date    2014-09-04 14:45:58
+* @version $Id$ */
+* {
+	padding: 0;
+	margin: 0;
+}
+ul {
+	list-style: none;
+}
+img {
+	border: none;
+}
+.container {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+.wrapper {
+	overflow: hidden;
+	position: relative;
+	text-align:center;
+	-webkit-backface-visibility:hidden;
+}
+.slide {
+	float: left;
+	position: relative;
+}
+.slide img {
+	max-width: 100%;
+	vertical-align: middle;
+}
+.prev, .next {
+	width: 40px;
+	height: 60px;
+	background: red;
+	color: #fff;
+	opacity: .5;
+	text-align: center;
+	line-height: 60px;
+	z-index: 9999;
+}
+.prev {
+	position: absolute;
+	top: 20%;
+	left: 5px;
+}
+.next {
+	position: absolute;
+	top: 20%;
+	right: 5px;
+}
