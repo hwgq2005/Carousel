@@ -237,8 +237,8 @@
 			if (opts.auto) {
 				start();
 			};
-			$('.next').on('click ', next);
-			$('.prev').on('click ', prev);
+			$Element.find('.next').on('click ', next);
+			$Element.find('.prev').on('click ', prev);
 			$slide.on('touchstart', touchStart);
 			$slide.on('touchmove', touchMove);
 			$slide.on('touchend', touchEnd);
