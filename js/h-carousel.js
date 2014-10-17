@@ -3,32 +3,33 @@
  * @date    2014-09-04 14:35:03
  * @version 1.0
  */
-;(function($) {
+;
+(function($) {
 	$.fn.carousel = function(options) {
 		// 默认参数
 		$.fn.carousel.defaults = {
-			auto: false,   //是否播放true或者false;
-			speed: 3000,   //播放速度;
-			arrow:false,   //是否添加左右箭头
-			focus:true,   //是否添加圆点焦点
-			callback: ''   //回调函数;
+			auto: false, //是否播放true或者false;
+			speed: 3000, //播放速度;
+			arrow: false, //是否添加左右箭头
+			focus: true, //是否添加圆点焦点
+			callback: '' //回调函数;
 		};
 		var opts = $.extend({}, $.fn.carousel.defaults, options);
 		return this.each(function() {
 			var $Element = $(this),
-				$slide = $Element.find('.slide'),
 				$wrapperSub = $Element.find('.wrapper-sub'),
+				$slide = $wrapperSub.find('.slide'),
 				cw = $(window).width(),
 				counts = $slide.length,
-				page = 0,
-				time,
 				isScrolling,
+				page = 0,
 				pressX,
 				pressY,
-				direct;
+				direct,
+				time;
 			var init = function() {
 					$wrapperSub.css('width', cw * counts);
-					var focusH='<div class="focus">';
+					var focusH = '<div class="focus">';
 					$slide.each(function(index, elem) {
 						$(elem).css({
 							'width': cw,
@@ -47,12 +48,12 @@
 							}).attr('data-translate', -cw);
 						};
 						if (index == 0) {
-							focusH+='<a href="javascript:;" class="active"></a>';
-						}else{
-							focusH+='<a href="javascript:;" ></a>';
+							focusH += '<a href="javascript:;" class="active"></a>';
+						} else {
+							focusH += '<a href="javascript:;" ></a>';
 						}
 					})
-					focusH+='</div>';
+					focusH += '</div>';
 					if (opts.focus) {
 						$Element.append(focusH);
 					};
@@ -60,7 +61,7 @@
 						$Element.append('<div class="prev"><</div><div class="next">></div>');
 					};
 					if (typeof opts.callback === 'function') {
-						opts.callback(page,$slide[page]);
+						opts.callback(page, $slide[page]);
 					}
 				}(),
 				next = function() {
@@ -91,7 +92,7 @@
 						}).attr('data-translate', +cw);
 					};
 					if (typeof opts.callback === 'function') {
-						opts.callback(page,$slide[page]);
+						opts.callback(page, $slide[page]);
 					}
 
 				},
@@ -124,7 +125,7 @@
 
 					};
 					if (typeof opts.callback === 'function') {
-						opts.callback(page,$slide[page]);
+						opts.callback(page, $slide[page]);
 					}
 				},
 				touchStart = function(event) {
@@ -239,8 +240,8 @@
 				},
 				start = function() {
 					if (typeof opts.speed == 'string') {
-						opts.speed=1000;
-					} 
+						opts.speed = 1000;
+					}
 					time = setInterval(next, opts.speed);
 				},
 				stop = function() {
