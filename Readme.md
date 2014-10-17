@@ -3,7 +3,7 @@ Carousel 文档
 插件说明：
 -
 支持 `<移动端> ` 、`<PC端> `，引入 `<Zepto.js> `或`<jQuery.js> `即可。
-Dom结构
+DOM结构
 -
 	<div class="wrapper" id="wrapper">
 		<div class="wrapper-sub" >
@@ -22,7 +22,7 @@ Dom结构
 		</div>
 	</div>
 
-参数调用
+JS调用
 -
 	$('#wrapper').carousel({
 		auto: true,
