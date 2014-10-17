@@ -90,6 +90,7 @@ i {
 	display: inline-block;
 	vertical-align: middle;
 	margin-left:8px;
+	cursor: default;
 }
 .wrapper .focus .active{
 	background: #f4726d;
