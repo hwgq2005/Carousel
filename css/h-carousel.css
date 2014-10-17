@@ -57,6 +57,25 @@ i {
 	max-width: 100%;
 	vertical-align: middle;
 }
+.wrapper .focus{
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	z-index: 9999;
+	font-size: 0;
+}
+.wrapper .focus a{
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #fff;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left:8px;
+}
+.wrapper .focus .active{
+	background: #f4726d;
+}
 .prev, .next {
 	width: 40px;
 	height: 60px;
@@ -64,7 +83,7 @@ i {
 	color: #fff;
 	text-align: center;
 	line-height: 60px;
-	z-index: 9999;
+	z-index: 9998;
 	font-size: 20px;
 	position: absolute;
 	top: 45%;

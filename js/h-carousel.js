@@ -3,7 +3,7 @@
  * @date    2014-09-04 14:35:03
  * @version 1.0
  */
-(function($) {
+;(function($) {
 	$.fn.carousel = function(options) {
 		// 默认参数
 		$.fn.carousel.defaults = {
@@ -27,6 +27,7 @@
 				direct;
 			var init = function() {
 					$wrapperSub.css('width', cw * counts);
+					var focusH='<div class="focus">';
 					$slide.each(function(index, elem) {
 						$(elem).css({
 							'width': cw,
@@ -44,7 +45,14 @@
 								'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 							}).attr('data-translate', -cw);
 						};
+						if (index == 0) {
+							focusH+='<a href="javascript:;" class="active"></a>';
+						}else{
+							focusH+='<a href="javascript:;" ></a>';
+						}
 					})
+					focusH+='</div>';
+					$Element.append(focusH);
 					if (opts.arrow) {
 						$Element.append('<div class="prev"><</div><div class="next">></div>');
 					};
@@ -57,6 +65,7 @@
 					if (page == counts) {
 						page = 0;
 					};
+					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
 					$($slide[page]).css({
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(0) translateZ(0)'
@@ -88,6 +97,7 @@
 					if (page == -1) {
 						page = counts - 1;
 					};
+					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
 					$($slide[page]).css({
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(0) translateZ(0)'
