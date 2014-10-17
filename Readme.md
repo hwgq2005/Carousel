@@ -8,16 +8,16 @@ DOM½á¹¹
 	<div class="wrapper" id="wrapper">
 		<div class="wrapper-sub" >
 			<div class="slide">
-				<img src="images/1.jpg" alt="">
+				...
 			</div>
 			<div class="slide">
-				<img src="images/2.jpg" alt="">
+				...
 			</div>
 			<div class="slide">
-				<img src="images/3.jpg" alt="">
+				...
 			</div>
 			<div class="slide">
-				<img src="images/2.jpg" alt="">
+				...
 			</div>
 		</div>
 	</div>
