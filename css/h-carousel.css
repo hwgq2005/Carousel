@@ -59,6 +59,9 @@ i {
 }
 .wrapper-sub .slide .slide-content{
 	height: 200px;
+	line-height: 200px;
+	font-size: 40px;
+	color:#fff;
 }
 .wrapper-sub .slide .color1{
 	background: #5098ED;
