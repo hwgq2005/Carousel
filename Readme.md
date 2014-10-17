@@ -27,7 +27,7 @@ JS调用
 	$('#wrapper').carousel({
 		auto: true,
 		speed: 3000,
-		arrow:true,
+		focus:true,
 		callback: function(index,elem) {}
 	});
 参数配置
@@ -35,6 +35,7 @@ JS调用
     auto: false,   //是否播放true或者false;
 	speed: 3000,   //播放速度;
 	arrow:false,   //是否添加左右箭头
+	focus:true,   //是否添加圆点焦点
 	callback: ''   //回调函数;
 
 
