@@ -57,6 +57,21 @@ i {
 	max-width: 100%;
 	vertical-align: middle;
 }
+.wrapper-sub .slide .slide-content{
+	height: 200px;
+}
+.wrapper-sub .slide .color1{
+	background: #5098ED;
+}
+.wrapper-sub .slide .color2{
+	background: #E04D4D;
+}
+.wrapper-sub .slide .color3{
+	background: #FA9834;
+}
+.wrapper-sub .slide .color4{
+	background: #5DB746;
+}
 .wrapper .focus{
 	position: absolute;
 	right: 8px;
@@ -79,7 +94,6 @@ i {
 .prev, .next {
 	width: 40px;
 	height: 60px;
-	background: rgba(219,44,33,.7);
 	color: #fff;
 	text-align: center;
 	line-height: 60px;
