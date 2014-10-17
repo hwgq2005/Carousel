@@ -264,6 +264,5 @@
 				}
 				init();
 		})
-
 	}
 })(window.jQuery || window.Zepto)
