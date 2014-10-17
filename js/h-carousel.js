@@ -10,6 +10,7 @@
 			auto: false,   //是否播放true或者false;
 			speed: 3000,   //播放速度;
 			arrow:false,   //是否添加左右箭头
+			focus:true,   //是否添加圆点焦点
 			callback: ''   //回调函数;
 		};
 		var opts = $.extend({}, $.fn.carousel.defaults, options);
@@ -52,7 +53,9 @@
 						}
 					})
 					focusH+='</div>';
-					$Element.append(focusH);
+					if (opts.focus) {
+						$Element.append(focusH);
+					};
 					if (opts.arrow) {
 						$Element.append('<div class="prev"><</div><div class="next">></div>');
 					};
