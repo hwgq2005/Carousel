@@ -11,8 +11,8 @@
 		<link rel="stylesheet" href="css/h-carousel.css">
 	</head>
 	<body>
-		<div class="container">
-			<div class="wrapper">
+		<div class="wrapper" id="wrapper">
+			<div class="wrapper-sub" >
 				<div class="slide">
 					<img src="images/1.jpg" alt="">
 				</div>
@@ -26,10 +26,19 @@
 					<img src="images/2.jpg" alt="">
 				</div>
 			</div>
-			<div class="prev">prev</div>
-			<div class="next">next</div>
+			
 		</div>
 		<script src="js/zepto.min.js"></script>
 		<script src="js/h-carousel.js"></script>
+		<script>
+			$('#wrapper').carousel({
+				auto: true,
+				speed: 3000,
+				arrow:true,
+				callback: function(index,elem) {
+					
+				}
+			});
+		</script>
 	</body>
 </html>
