@@ -54,7 +54,7 @@ i {
 	position: relative;
 }
 .wrapper-sub .slide img {
-	width: 10px;
+	max-width: 100%;
 	vertical-align: middle;
 }
 .prev, .next {
