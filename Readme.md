@@ -28,15 +28,16 @@ JS调用
 		auto: true,
 		speed: 3000,
 		focus:true,
+		...
 		callback: function(index,elem) {}
 	});
 参数配置
 -
-    auto: false,   //是否播放true或者false;
-	speed: 3000,   //播放速度;
-	arrow:false,   //是否添加左右箭头
-	focus:true,   //是否添加圆点焦点
-	callback: ''   //回调函数;
+    auto: false,    //是否播放true或者false;
+	speed: 3000,    //播放速度;
+	arrow:false,    //是否添加左右箭头
+	focus:true,     //是否添加圆点焦点
+	callback: ''    //回调函数;
 
 
 该插件仅供学习，还需不断完善。
