@@ -19,8 +19,8 @@
 			var $Element = $(this),
 				$wrapperSub = $Element.find('.wrapper-sub'),
 				$slide = $wrapperSub.find('.slide'),
-				cw = $(window).width(),
 				counts = $slide.length,
+				cw = $(window).width(),
 				isScrolling,
 				page = 0,
 				pressX,
@@ -95,7 +95,6 @@
 					if (typeof opts.callback === 'function') {
 						opts.callback(page, $slide[page]);
 					}
-
 				},
 				prev = function() {
 					page--;
@@ -123,7 +122,6 @@
 							'-webkit-transition': '0',
 							'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 						}).attr('data-translate', -cw);
-
 					};
 					if (typeof opts.callback === 'function') {
 						opts.callback(page, $slide[page]);
@@ -166,7 +164,6 @@
 									// 	'-webkit-transition': '0',
 									// 	'-webkit-transform': 'translate(' + (-cw + imgX)+ 'px,0) translateZ(0)'
 									// });
-
 									if (Math.abs(imgX) > cw / 3) {
 										direct = "right"; //向右\
 
@@ -176,7 +173,6 @@
 										direct = '';
 									}
 								} else {
-
 									$($slide).each(function(index, el) {
 										var translate = parseInt($(el).data('translate'));
 										$(el).css({
