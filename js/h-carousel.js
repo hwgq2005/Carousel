@@ -27,7 +27,7 @@
 				pressY,
 				direct,
 				time;
-			var init = function() {
+			var config = function() {
 					$wrapperSub.css('width', cw * counts);
 					var focusH = '<div class="focus">';
 					$slide.each(function(index, elem) {
@@ -63,7 +63,8 @@
 					if (typeof opts.callback === 'function') {
 						opts.callback(page, $slide[page]);
 					}
-				}(),
+					onEvent();
+				},
 				next = function() {
 					page++;
 					if (page == counts) {
@@ -247,15 +248,21 @@
 				stop = function() {
 					clearInterval(time);
 					time = null;
-				};
-			if (opts.auto) {
-				start();
-			};
-			$Element.find('.next').on('click ', next);
-			$Element.find('.prev').on('click ', prev);
-			$slide.on('touchstart', touchStart);
-			$slide.on('touchmove', touchMove);
-			$slide.on('touchend', touchEnd);
+				},
+				onEvent=function(){
+					$Element.find('.next').on('click ', next);
+					$Element.find('.prev').on('click ', prev);
+					$slide.on('touchstart', touchStart);
+					$slide.on('touchmove', touchMove);
+					$slide.on('touchend', touchEnd);
+				},
+				init=function(){
+					config();
+					if (opts.auto) {
+						start();
+					};
+				}
+				init();
 		})
 
 	}
