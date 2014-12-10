@@ -1,6 +1,6 @@
 /*
  * @authors H君(qq:262281610)
- * @date    2014-09-04 14:35:03
+ * @date    2014-12-10 11:27:59
  * @version 1.0
  */
 ;
@@ -75,19 +75,16 @@
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(0) translateZ(0)'
 					}).attr('data-translate', '0').siblings().css({
-						// 'z-index': '99',
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 					}).attr('data-translate', -cw);
 					$($slide[page]).next().css({
-						// 'z-index': '98',
 						'-webkit-transition': '0',
 						'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
 					})
 					$($slide[page]).next().attr('data-translate', cw);
 					if (page == counts - 1) {
 						$($slide[0]).css({
-							// 'z-index': '98',
 							'-webkit-transition': '0',
 							'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
 						}).attr('data-translate', +cw);
@@ -106,19 +103,16 @@
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(0) translateZ(0)'
 					}).attr('data-translate', '0').siblings().css({
-						// 'z-index': '99',
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
 					}).attr('data-translate', cw);
 					$($slide[page]).prev().css({
-						// 'z-index': '98',
 						'-webkit-transition': '0',
 						'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 					})
 					$($slide[page]).prev().attr('data-translate', -cw);
 					if (page == 0) {
 						$($slide[counts - 1]).css({
-							// 'z-index': '98',
 							'-webkit-transition': '0',
 							'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 						}).attr('data-translate', -cw);
@@ -272,7 +266,7 @@
 					if (opts.auto) {
 						start();
 					};
-				}
+				};
 				init();
 		})
 	}
