@@ -75,19 +75,19 @@
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(0) translateZ(0)'
 					}).attr('data-translate', '0').siblings().css({
-						'z-index': '99',
+						// 'z-index': '99',
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 					}).attr('data-translate', -cw);
 					$($slide[page]).next().css({
-						'z-index': '98',
+						// 'z-index': '98',
 						'-webkit-transition': '0',
 						'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
 					})
 					$($slide[page]).next().attr('data-translate', cw);
 					if (page == counts - 1) {
 						$($slide[0]).css({
-							'z-index': '98',
+							// 'z-index': '98',
 							'-webkit-transition': '0',
 							'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
 						}).attr('data-translate', +cw);
@@ -106,19 +106,19 @@
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(0) translateZ(0)'
 					}).attr('data-translate', '0').siblings().css({
-						'z-index': '99',
+						// 'z-index': '99',
 						'-webkit-transition': '.4s',
 						'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
 					}).attr('data-translate', cw);
 					$($slide[page]).prev().css({
-						'z-index': '98',
+						// 'z-index': '98',
 						'-webkit-transition': '0',
 						'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 					})
 					$($slide[page]).prev().attr('data-translate', -cw);
 					if (page == 0) {
 						$($slide[counts - 1]).css({
-							'z-index': '98',
+							// 'z-index': '98',
 							'-webkit-transition': '0',
 							'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
 						}).attr('data-translate', -cw);
@@ -145,25 +145,33 @@
 							if (Math.abs(imgX) > Math.abs(imgY)) {
 								//水平方向
 								if (imgX > 0) {
-									$($slide).each(function(index, el) {
-										var translate = parseInt($(el).data('translate'));
-										if (index == 0) {
-											$(el).css({
-												'z-index': '99'
-											});
-										}
-										$(el).css({
-											'-webkit-transition': '0',
-											'-webkit-transform': 'translate(' + (translate + imgX) + 'px,0) translateZ(0)'
-										})
-									});
-									// $($slide[page]).css({
-									// 	'-webkit-transition': '0',
-									// 	'-webkit-transform': 'translate(' + imgX + 'px,0) translateZ(0)'
-									// }).prev().css({
-									// 	'-webkit-transition': '0',
-									// 	'-webkit-transform': 'translate(' + (-cw + imgX)+ 'px,0) translateZ(0)'
+									// $($slide).each(function(index, el) {
+									// 	var translate = parseInt($(el).data('translate'));
+									// 	if (index == 0) {
+
+									// 		// $(el).css({
+									// 		// 	'z-index': '99'
+									// 		// });
+									// 	}
+									// 	$(el).css({
+									// 		// 'z-index':$slide.length-index,
+									// 		'-webkit-transition': '0',
+									// 		'-webkit-transform': 'translate(' + (translate + imgX) + 'px,0) translateZ(0)'
+									// 	})
 									// });
+									$($slide[page]).css({
+										'-webkit-transition': '0',
+										'-webkit-transform': 'translate(' + imgX + 'px,0) translateZ(0)'
+									}).prev().css({
+										'-webkit-transition': '0',
+										'-webkit-transform': 'translate(' + (-cw + imgX)+ 'px,0) translateZ(0)'
+									});
+									if (page==0) {
+										$($slide[$slide.length-1]).css({
+											'-webkit-transition': '0',
+											'-webkit-transform': 'translate(' + (-cw + imgX)+ 'px,0) translateZ(0)'
+										});
+									};
 									if (Math.abs(imgX) > cw / 3) {
 										direct = "right"; //向右\
 
@@ -173,20 +181,27 @@
 										direct = '';
 									}
 								} else {
-									$($slide).each(function(index, el) {
-										var translate = parseInt($(el).data('translate'));
-										$(el).css({
-											'-webkit-transition': '0',
-											'-webkit-transform': 'translate(' + (translate + imgX) + 'px,0) translateZ(0)'
-										});
-									});
-									// $($slide[page]).css({
-									// 	'-webkit-transition': '0s',
-									// 	'-webkit-transform': 'translate(' + imgX + 'px,0) translateZ(0)'
-									// }).next().css({
-									// 	'-webkit-transition': '0',
-									// 	'-webkit-transform': 'translate(' + (cw + imgX)+ 'px,0) translateZ(0)'
+									// $($slide).each(function(index, el) {
+									// 	var translate = parseInt($(el).data('translate'));
+									// 	$(el).css({
+									// 		// 'z-index':index,
+									// 		'-webkit-transition': '0',
+									// 		'-webkit-transform': 'translate(' + (translate + imgX) + 'px,0) translateZ(0)'
+									// 	});
 									// });
+									$($slide[page]).css({
+										'-webkit-transition': '0s',
+										'-webkit-transform': 'translate(' + imgX + 'px,0) translateZ(0)'
+									}).next().css({
+										'-webkit-transition': '0',
+										'-webkit-transform': 'translate(' + (cw + imgX)+ 'px,0) translateZ(0)'
+									});
+									if (page==$slide.length-1) {
+										$($slide[0]).css({
+											'-webkit-transition': '0',
+											'-webkit-transform': 'translate(' + (cw + imgX)+ 'px,0) translateZ(0)'
+										});
+									};
 									if (Math.abs(imgX) > cw / 3) {
 										direct = "left"; //向左
 									} else if (Math.abs(imgX) > cw) {
