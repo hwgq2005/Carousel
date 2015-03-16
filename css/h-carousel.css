@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/* 
+* @authors H君(qq:262281610)
+* @date    2014-09-04 14:45:58
+* @version $Id$ 
+*/
+body, div, ul, ol, li, a, img, h1, h2, h3, h4, h5, p, input, table, tr, td, i, b, dl, dt, textarea, select, option, pre { margin: 0; padding: 0; }
+body { font-family: "微软雅黑", Verdana, Arial, Helvetica, sans-serif; font-size: 14px; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+img, input { border: 0; outline: none; }
+ul { list-style: none; }
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+.clear { clear: both; }
+i { font-style: normal }
+.wrapper { width: 100%; height: 100%; position: relative; overflow: hidden; }
+.wrapper-sub { overflow: hidden; position: relative; text-align: center; -webkit-backface-visibility: hidden; }
+.wrapper-sub .slide { float: left; position: relative; }
+.wrapper-sub .slide img { max-width: 100%; vertical-align: middle; }
+.wrapper .focus { position: absolute; right: 8px; bottom: 8px; z-index: 9999; font-size: 0; }
+.wrapper .focus a { width: 10px; height: 10px; border-radius: 50%; background: #fff; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: default; }
+.wrapper .focus .active { background: #f4726d; }
+.prev, .next { width: 40px; height: 60px; color: #fff; text-align: center; line-height: 60px; z-index: 9998; font-size: 20px; position: absolute; top: 45%; margin-top: -30px; }
+.prev { left: 5px; }
+.next { right: 5px; }
+/* 自定义样式 */
+.wrapper-sub .slide .slide-content { height: 200px; line-height: 200px; font-size: 40px; color: #fff; }
+.wrapper-sub .slide .color1 { background: #5098ED; }
+.wrapper-sub .slide .color2 { background: #E04D4D; }
+.wrapper-sub .slide .color3 { background: #FA9834; }
+.wrapper-sub .slide .color4 { background: #5DB746; }
