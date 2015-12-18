@@ -27,26 +27,19 @@
 				pressY,
 				direct,
 				time;
+			var offsetX = 0;
+			var state = true;
+			var t;
 			var config = function() {
-					$wrapperSub.css('width', cw * counts);
+					$wrapperSub.css({
+						'width': cw * counts,
+						'-webkit-transform': 'translateX(0)'
+					});
+					$slide.css({
+						'width': cw
+					});
 					var focusH = '<div class="focus">';
 					$slide.each(function(index, elem) {
-						$(elem).css({
-							'width': cw,
-							'left': -(cw * index),
-							'transition': '0',
-							'-webkit-transition': '0',
-							'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
-						}).attr('data-translate', +cw);
-						if (index == 0) {
-							$(elem).css({
-								'-webkit-transform': 'translate(0) translateZ(0)'
-							}).attr('data-translate', 0);
-						} else if (index == counts - 1) {
-							$(elem).css({
-								'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
-							}).attr('data-translate', -cw);
-						};
 						if (index == 0) {
 							focusH += '<a href="javascript:;" class="active"></a>';
 						} else {
@@ -58,7 +51,7 @@
 						$Element.append(focusH);
 					};
 					if (opts.arrow) {
-						$Element.append('<div class="prev"><</div><div class="next">></div>');
+						$Element.append('<div class="prev"></div><div class="next"></div>');
 					};
 					if (typeof opts.callback === 'function') {
 						opts.callback(page, $slide[page]);
@@ -66,60 +59,58 @@
 					onEvent();
 				},
 				next = function() {
-					page++;
-					if (page == counts) {
-						page = 0;
+					if (state) {
+						page++;
+						// console.log(imgX)
+						if (page == counts) {
+							page = 0;
+							offsetX = 0;
+						};
+						offsetX = -page * cw;
+						console.log(offsetX)
+						console.log(page)
+						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
+
+						$wrapperSub.css({
+							'-webkit-transition': '0.4s',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+						})
+						if (typeof opts.callback === 'function') {
+							opts.callback(page, $slide[page]);
+						}
+						state = false;
+						t = setTimeout(function() {
+							state = true;
+							clearTimeout(t);
+
+						}, 500);
 					};
-					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
-					$($slide[page]).css({
-						'-webkit-transition': '.4s',
-						'-webkit-transform': 'translate(0) translateZ(0)'
-					}).attr('data-translate', '0').siblings().css({
-						'-webkit-transition': '.4s',
-						'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
-					}).attr('data-translate', -cw);
-					$($slide[page]).next().css({
-						'-webkit-transition': '0',
-						'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
-					})
-					$($slide[page]).next().attr('data-translate', cw);
-					if (page == counts - 1) {
-						$($slide[0]).css({
-							'-webkit-transition': '0',
-							'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
-						}).attr('data-translate', +cw);
-					};
-					if (typeof opts.callback === 'function') {
-						opts.callback(page, $slide[page]);
-					}
+
 				},
 				prev = function() {
-					page--;
-					if (page == -1) {
-						page = counts - 1;
-					};
-					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
-					$($slide[page]).css({
-						'-webkit-transition': '.4s',
-						'-webkit-transform': 'translate(0) translateZ(0)'
-					}).attr('data-translate', '0').siblings().css({
-						'-webkit-transition': '.4s',
-						'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
-					}).attr('data-translate', cw);
-					$($slide[page]).prev().css({
-						'-webkit-transition': '0',
-						'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
-					})
-					$($slide[page]).prev().attr('data-translate', -cw);
-					if (page == 0) {
-						$($slide[counts - 1]).css({
-							'-webkit-transition': '0',
-							'-webkit-transform': 'translate(-' + cw + 'px,0) translateZ(0)'
-						}).attr('data-translate', -cw);
-					};
-					if (typeof opts.callback === 'function') {
-						opts.callback(page, $slide[page]);
+
+					if (state) {
+						page--;
+						if (page == -1) {
+							page = counts - 1;
+						}
+						offsetX = -page * cw;
+						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
+
+						$wrapperSub.css({
+							'-webkit-transition': '0.4s',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+						})
+						if (typeof opts.callback === 'function') {
+							opts.callback(page, $slide[page]);
+						}
+						state = false;
+						t = setTimeout(function() {
+							state = true;
+							clearTimeout(t);
+						}, 500);
 					}
+
 				},
 				touchStart = function(event) {
 					if (event.touches.length == 1) {
@@ -134,38 +125,18 @@
 					if (event.touches.length == 1) {
 						if (!isScrolling) {
 							var touch = event.touches[0],
+								imgT = touch.pageX - pressX + offsetX,
 								imgX = touch.pageX - pressX,
 								imgY = touch.pageY - pressY;
 							if (Math.abs(imgX) > Math.abs(imgY)) {
 								//水平方向
 								if (imgX > 0) {
-									// $($slide).each(function(index, el) {
-									// 	var translate = parseInt($(el).data('translate'));
-									// 	if (index == 0) {
 
-									// 		// $(el).css({
-									// 		// 	'z-index': '99'
-									// 		// });
-									// 	}
-									// 	$(el).css({
-									// 		// 'z-index':$slide.length-index,
-									// 		'-webkit-transition': '0',
-									// 		'-webkit-transform': 'translate(' + (translate + imgX) + 'px,0) translateZ(0)'
-									// 	})
-									// });
-									$($slide[page]).css({
+									$wrapperSub.css({
 										'-webkit-transition': '0',
-										'-webkit-transform': 'translate(' + imgX + 'px,0) translateZ(0)'
-									}).prev().css({
-										'-webkit-transition': '0',
-										'-webkit-transform': 'translate(' + (-cw + imgX)+ 'px,0) translateZ(0)'
-									});
-									if (page==0) {
-										$($slide[$slide.length-1]).css({
-											'-webkit-transition': '0',
-											'-webkit-transform': 'translate(' + (-cw + imgX)+ 'px,0) translateZ(0)'
-										});
-									};
+										'-webkit-transform': 'translateX(' + imgT + 'px) '
+									})
+
 									if (Math.abs(imgX) > cw / 3) {
 										direct = "right"; //向右\
 
@@ -175,27 +146,12 @@
 										direct = '';
 									}
 								} else {
-									// $($slide).each(function(index, el) {
-									// 	var translate = parseInt($(el).data('translate'));
-									// 	$(el).css({
-									// 		// 'z-index':index,
-									// 		'-webkit-transition': '0',
-									// 		'-webkit-transform': 'translate(' + (translate + imgX) + 'px,0) translateZ(0)'
-									// 	});
-									// });
-									$($slide[page]).css({
+
+									$wrapperSub.css({
 										'-webkit-transition': '0s',
-										'-webkit-transform': 'translate(' + imgX + 'px,0) translateZ(0)'
-									}).next().css({
-										'-webkit-transition': '0',
-										'-webkit-transform': 'translate(' + (cw + imgX)+ 'px,0) translateZ(0)'
-									});
-									if (page==$slide.length-1) {
-										$($slide[0]).css({
-											'-webkit-transition': '0',
-											'-webkit-transform': 'translate(' + (cw + imgX)+ 'px,0) translateZ(0)'
-										});
-									};
+										'-webkit-transform': 'translateX(' + imgT + 'px) '
+									})
+
 									if (Math.abs(imgX) > cw / 3) {
 										direct = "left"; //向左
 									} else if (Math.abs(imgX) > cw) {
@@ -224,25 +180,11 @@
 					} else if (direct == 'left') {
 						next();
 					} else {
-						$($slide).each(function(index, el) {
-							var translate = $(el).data('translate');
-							$(el).css({
-								'-webkit-transition': '.4s',
-								'-webkit-transform': 'translate(' + translate + 'px,0) translateZ(0)'
-							})
+						$wrapperSub.css({
+							'-webkit-transition': '.4s',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
 						});
-						// $($slide[page]).css({
-						// 	'-webkit-transition': '0.4s',
-						// 	'-webkit-transform': 'translate(0) translateZ(0)'
-						// }).prev().css({
-						// 	'-webkit-transition': '0.4s',
-						// 	'-webkit-transform': 'translate(' + cw + 'px,0) translateZ(0)'
-						// });
 					}
-					// 第二种写法：
-					// direct=='right' ?  slide.prev() :  direct=='left' ?  slide.next() : $($slide[page]).css({
-					// 		'-webkit-transform': 'translate(0) translateZ(0)'
-					// });
 				},
 				start = function() {
 					if (typeof opts.speed == 'string') {
@@ -254,20 +196,20 @@
 					clearInterval(time);
 					time = null;
 				},
-				onEvent=function(){
+				onEvent = function() {
 					$Element.find('.next').on('click ', next);
 					$Element.find('.prev').on('click ', prev);
 					$slide.on('touchstart', touchStart);
 					$slide.on('touchmove', touchMove);
 					$slide.on('touchend', touchEnd);
 				},
-				init=function(){
+				init = function() {
 					config();
 					if (opts.auto) {
 						start();
 					};
 				};
-				init();
+			init();
 		})
 	}
 })(window.jQuery || window.Zepto)
