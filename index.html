@@ -38,15 +38,18 @@
 		<script src="js/zepto.min.js"></script>
 		<script src="js/h-carousel.js"></script>
 		<script>
-			$('#wrapper').carousel({
-				speed: 3000,
+			var c=$('#wrapper').carousel({
+				auto: false, //是否播放true或者false;
+				speed: 3000, //播放速度;
 				arrow: true, //是否添加左右箭头
-				focus:true,
-				callback: function(index,elem) {
-					console.log(index)
-					console.log(elem)
+				focus: true, //是否添加圆点焦点
+				callback: function(indx,elem){
+
 				}
 			});
+		
+				
+			
 		</script>
 	</body>
 </html>

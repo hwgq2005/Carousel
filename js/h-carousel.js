@@ -22,22 +22,35 @@
 				counts = $slide.length,
 				cw = $(window).width(),
 				isScrolling,
+				offsetX = 0,
+				state = true,
+				delay,
+				delayT = 500,
 				page = 0,
 				pressX,
 				pressY,
 				direct,
 				time;
-			var offsetX = 0;
-			var state = true;
-			var t;
-			var config = function() {
-					$wrapperSub.css({
-						'width': cw * counts,
-						'-webkit-transform': 'translateX(0)'
-					});
-					$slide.css({
-						'width': cw
-					});
+				
+			var carousel = {};
+
+			carousel.init = function() {
+				var _self = this;
+				_self.handel();
+				if (opts.auto) {
+					_self.autoStart();
+				};
+			};
+
+			carousel.handel = function() {
+				$wrapperSub.css({
+					'width': cw * counts,
+					'-webkit-transform': 'translateX(0)'
+				});
+				$slide.css({
+					'width': cw
+				});
+				if (opts.focus) {
 					var focusH = '<div class="focus">';
 					$slide.each(function(index, elem) {
 						if (index == 0) {
@@ -47,166 +60,164 @@
 						}
 					})
 					focusH += '</div>';
-					if (opts.focus) {
-						$Element.append(focusH);
+					$Element.append(focusH);
+				};
+				if (opts.arrow) {
+					$Element.append('<div class="prev"></div><div class="next"></div>');
+				};
+				if (typeof opts.callback === 'function') {
+					opts.callback(page, $slide[page]);
+				}
+				this.onEvent();
+			}
+
+			carousel.next = function() {
+				if (state) {
+					page++;
+					if (page == counts) {
+						page = 0;
+						offsetX = 0;
 					};
-					if (opts.arrow) {
-						$Element.append('<div class="prev"></div><div class="next"></div>');
-					};
+					offsetX = -page * cw;
+					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
+					$wrapperSub.css({
+						'-webkit-transition': '0.4s',
+						'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+					})
 					if (typeof opts.callback === 'function') {
 						opts.callback(page, $slide[page]);
 					}
-					onEvent();
-				},
-				next = function() {
-					if (state) {
-						page++;
-						if (page == counts) {
-							page = 0;
-							offsetX = 0;
-						};
-						offsetX = -page * cw;
-						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
+					state = false;
+					delay = setTimeout(function() {
+						state = true;
+						clearTimeout(delay);
 
-						$wrapperSub.css({
-							'-webkit-transition': '0.4s',
-							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
-						})
-						if (typeof opts.callback === 'function') {
-							opts.callback(page, $slide[page]);
-						}
-						state = false;
-						t = setTimeout(function() {
-							state = true;
-							clearTimeout(t);
+					}, delayT);
+				};
+			}
 
-						}, 500);
-					};
-
-				},
-				prev = function() {
-
-					if (state) {
-						page--;
-						if (page == -1) {
-							page = counts - 1;
-						}
-						offsetX = -page * cw;
-						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
-
-						$wrapperSub.css({
-							'-webkit-transition': '0.4s',
-							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
-						})
-						if (typeof opts.callback === 'function') {
-							opts.callback(page, $slide[page]);
-						}
-						state = false;
-						t = setTimeout(function() {
-							state = true;
-							clearTimeout(t);
-						}, 500);
+			carousel.prev = function() {
+				if (state) {
+					page--;
+					if (page == -1) {
+						page = counts - 1;
 					}
+					offsetX = -page * cw;
+					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
 
-				},
-				touchStart = function(event) {
-					if (event.touches.length == 1) {
-						var touch = event.touches[0];
-						pressX = touch.pageX;
-						pressY = touch.pageY;
-						isScrolling = undefined;
-					};
-				},
-				touchMove = function(event) {
-					event.preventDefault();
-					if (event.touches.length == 1) {
-						if (!isScrolling) {
-							var touch = event.touches[0],
-								imgT = touch.pageX - pressX + offsetX,
-								imgX = touch.pageX - pressX,
-								imgY = touch.pageY - pressY;
-							if (Math.abs(imgX) > Math.abs(imgY)) {
-								//水平方向
-								if (imgX > 0) {
+					$wrapperSub.css({
+						'-webkit-transition': '0.4s',
+						'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+					})
+					if (typeof opts.callback === 'function') {
+						opts.callback(page, $slide[page]);
+					}
+					state = false;
+					delay = setTimeout(function() {
+						state = true;
+						clearTimeout(delay);
+					}, delayT);
+				}
 
-									$wrapperSub.css({
-										'-webkit-transition': '0',
-										'-webkit-transform': 'translateX(' + imgT + 'px) '
-									})
+			}
 
-									if (Math.abs(imgX) > cw / 3) {
-										direct = "right"; //向右\
+			carousel.touchStart = function(event) {
+				if (event.touches.length == 1) {
+					var touch = event.touches[0];
+					pressX = touch.pageX;
+					pressY = touch.pageY;
+					isScrolling = undefined;
+				};
+			}
 
-									} else if (Math.abs(imgX) > cw) {
-										alert(2)
-									} else {
-										direct = '';
-									}
+			carousel.touchMove = function(event) {
+				event.preventDefault();
+				if (event.touches.length == 1) {
+					if (!isScrolling) {
+						var touch = event.touches[0],
+							imgT = touch.pageX - pressX + offsetX,
+							imgX = touch.pageX - pressX,
+							imgY = touch.pageY - pressY;
+						if (Math.abs(imgX) > Math.abs(imgY)) {
+							//水平方向
+							if (imgX > 0) {
+								$wrapperSub.css({
+									'-webkit-transition': '0s',
+									'-webkit-transform': 'translateX(' + imgT + 'px) '
+								})
+								if (Math.abs(imgX) > cw / 3) {
+									direct = "right"; //向右\
+
+								} else if (Math.abs(imgX) > cw) {
+
 								} else {
-
-									$wrapperSub.css({
-										'-webkit-transition': '0s',
-										'-webkit-transform': 'translateX(' + imgT + 'px) '
-									})
-
-									if (Math.abs(imgX) > cw / 3) {
-										direct = "left"; //向左
-									} else if (Math.abs(imgX) > cw) {
-
-									} else {
-										direct = '';
-									}
+									direct = '';
 								}
 							} else {
-								//垂直方向 暂时没用
-								if (imgY > 0) {
-									direct = "down"; //向下
-									//do down function
+
+								$wrapperSub.css({
+									'-webkit-transition': '0s',
+									'-webkit-transform': 'translateX(' + imgT + 'px) '
+								})
+
+								if (Math.abs(imgX) > cw / 3) {
+									direct = "left"; //向左
+								} else if (Math.abs(imgX) > cw) {
+
 								} else {
-									direct = "up"; //向上
-									//do up function
+									direct = '';
 								}
 							}
+						} else {
+							//垂直方向 暂时没用
+							if (imgY > 0) {
+								direct = "down"; //向下
+								//do down function
+							} else {
+								direct = "up"; //向上
+								//do up function
+							}
 						}
-					};
-				},
-				touchEnd = function(event) {
-					// 第一种写法：
-					if (direct == 'right') {
-						prev();
-					} else if (direct == 'left') {
-						next();
-					} else {
-						$wrapperSub.css({
-							'-webkit-transition': '.4s',
-							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
-						});
 					}
-				},
-				start = function() {
-					if (typeof opts.speed == 'string') {
-						opts.speed = 1000;
-					}
-					time = setInterval(next, opts.speed);
-				},
-				stop = function() {
-					clearInterval(time);
-					time = null;
-				},
-				onEvent = function() {
-					$Element.find('.next').on('click ', next);
-					$Element.find('.prev').on('click ', prev);
-					$slide.on('touchstart', touchStart);
-					$slide.on('touchmove', touchMove);
-					$slide.on('touchend', touchEnd);
-				},
-				init = function() {
-					config();
-					if (opts.auto) {
-						start();
-					};
 				};
-			init();
+			}
+
+			carousel.touchEnd = function(event) {
+				// 第一种写法：
+				if (direct == 'right') {
+					carousel.prev();
+				} else if (direct == 'left') {
+					carousel.next();
+				} else {
+					$wrapperSub.css({
+						'-webkit-transition': '0.4s',
+						'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+					});
+				}
+			}
+
+			carousel.autoStart = function() {
+				var _self = this;
+				if (typeof opts.speed == 'string') {
+					opts.speed = 1000;
+				}
+				time = setInterval(_self.next, opts.speed);
+			}
+			carousel.stop = function() {
+				clearInterval(time);
+				time = null;
+			}
+			carousel.onEvent = function() {
+				var _self = this;
+				$Element.find('.next').on('click ', _self.next);
+				$Element.find('.prev').on('click ', _self.prev);
+				$slide.on('touchstart', _self.touchStart);
+				$slide.on('touchmove', _self.touchMove);
+				$slide.on('touchend', _self.touchEnd);
+			}
+
+			carousel.init();
 		})
+
 	}
 })(window.jQuery || window.Zepto)
