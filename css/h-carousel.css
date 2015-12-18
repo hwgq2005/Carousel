@@ -50,6 +50,7 @@ i {
 	text-align: center;
 	-webkit-backface-visibility: hidden;
 	/*-webkit-transition:all 2s linear;*/
+	'-webkit-transition': all 0.4s ease,
 }
 .wrapper-sub .slide {
 	float: left;

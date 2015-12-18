@@ -26,7 +26,7 @@
 				offsetX = 0,
 				state = true,
 				delay,
-				delayT = 500,
+				delayT = 300,
 				page = 0,
 				pressX,
 				pressY,
@@ -78,26 +78,39 @@
 			 */
 			carousel.next = function() {
 				if (state) {
-					page++;
-					if (page == counts) {
-						page = 0;
-						offsetX = 0;
-					};
-					offsetX = -page * cw;
-					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
-					$wrapperSub.css({
-						'-webkit-transition': '0.4s',
-						'-webkit-transform': 'translateX(-' + page * cw + 'px) '
-					})
-					if (typeof opts.callback === 'function') {
-						opts.callback(page, $slide[page]);
-					}
-					state = false;
-					delay = setTimeout(function() {
-						state = true;
-						clearTimeout(delay);
+					
+					
+					// if (page == counts) {
+					// 	page = 0;
+					// 	offsetX = 0;
+					// };
+					// 
+					if ( page != counts -1) {
+						page++;
+						// console.log(page)
+						offsetX = -page * cw;
+						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
+						$wrapperSub.css({
+							'-webkit-transition': 'all 0.4s ease',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+						})
+						if (typeof opts.callback === 'function') {
+							opts.callback(page, $slide[page]);
+						}
+						state = false;
+						delay = setTimeout(function() {
+							state = true;
+							clearTimeout(delay);
+						}, delayT);
 
-					}, delayT);
+					}
+
+					if ( page == counts -1){
+						$Element.find('.next').hide();
+					}
+					$Element.find('.prev').show();
+					
+					
 				};
 			}
 
@@ -107,25 +120,34 @@
 			 */
 			carousel.prev = function() {
 				if (state) {
-					page--;
-					if (page == -1) {
-						page = counts - 1;
-					}
-					offsetX = -page * cw;
-					$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
+					if ( page != 0) {
+						page--;
+						offsetX = -page * cw;
+						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
 
-					$wrapperSub.css({
-						'-webkit-transition': '0.4s',
-						'-webkit-transform': 'translateX(-' + page * cw + 'px) '
-					})
-					if (typeof opts.callback === 'function') {
-						opts.callback(page, $slide[page]);
+						$wrapperSub.css({
+							'-webkit-transition': 'all 0.4s ease',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+						})
+						if (typeof opts.callback === 'function') {
+							opts.callback(page, $slide[page]);
+						}
+						state = false;
+						delay = setTimeout(function() {
+							state = true;
+							clearTimeout(delay);
+						}, delayT);
 					}
-					state = false;
-					delay = setTimeout(function() {
-						state = true;
-						clearTimeout(delay);
-					}, delayT);
+
+					if ( page == 0){
+						$Element.find('.prev').hide();
+					};
+					$Element.find('.next').show();
+					
+					// if (page == -1) {
+					// 	page = counts - 1;
+					// }
+					
 				}
 
 			}
@@ -161,7 +183,7 @@
 							//水平方向
 							if (imgX > 0) {
 								$wrapperSub.css({
-									'-webkit-transition': '0s',
+									'-webkit-transition': 'all 0s ease',
 									'-webkit-transform': 'translateX(' + imgT + 'px) '
 								})
 								if (Math.abs(imgX) > cw / 3) {
@@ -175,7 +197,7 @@
 							} else {
 
 								$wrapperSub.css({
-									'-webkit-transition': '0s',
+									'-webkit-transition': 'all 0s ease',
 									'-webkit-transform': 'translateX(' + imgT + 'px) '
 								})
 
@@ -209,12 +231,28 @@
 			carousel.touchEnd = function(event) {
 				// 第一种写法：
 				if (direct == 'right') {
-					carousel.prev();
+					// console.log(page)
+					if (page != 0) {
+						carousel.prev();
+					}else{
+						$wrapperSub.css({
+							'-webkit-transition': 'all 0.4s ease',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+						});
+					}
 				} else if (direct == 'left') {
-					carousel.next();
+					// carousel.next();
+					if (page != counts - 1) {
+						carousel.next();
+					}else{
+						$wrapperSub.css({
+							'-webkit-transition': 'all 0.4s ease',
+							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
+						});
+					};
 				} else {
 					$wrapperSub.css({
-						'-webkit-transition': '0.4s',
+						'-webkit-transition': 'all 0.4s ease',
 						'-webkit-transform': 'translateX(-' + page * cw + 'px) '
 					});
 				}
@@ -260,6 +298,9 @@
 			 */
 			carousel.arrow = function() {
 				$Element.append('<div class="prev"></div><div class="next"></div>');
+				if (page == 0) {
+					$Element.find('.prev').hide();
+				} 
 			}
 
 			/**
