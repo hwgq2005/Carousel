@@ -39,12 +39,12 @@
 		<script src="js/h-carousel.js"></script>
 		<script>
 			$('#wrapper').carousel({
-				auto: false,
 				speed: 3000,
 				arrow: true, //是否添加左右箭头
 				focus:true,
 				callback: function(index,elem) {
-					// console.log(elem)
+					console.log(index)
+					console.log(elem)
 				}
 			});
 		</script>

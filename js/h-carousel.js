@@ -61,14 +61,11 @@
 				next = function() {
 					if (state) {
 						page++;
-						// console.log(imgX)
 						if (page == counts) {
 							page = 0;
 							offsetX = 0;
 						};
 						offsetX = -page * cw;
-						console.log(offsetX)
-						console.log(page)
 						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
 
 						$wrapperSub.css({
