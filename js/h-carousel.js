@@ -7,6 +7,7 @@
 (function($) {
 	$.fn.carousel = function(options) {
 		// 默认参数
+
 		$.fn.carousel.defaults = {
 			auto: false, //是否播放true或者false;
 			speed: 3000, //播放速度;
@@ -31,18 +32,27 @@
 				pressY,
 				direct,
 				time;
-				
+
 			var carousel = {};
 
+			/**
+			 * 初始化
+			 * @return {[type]} [description]
+			 */
 			carousel.init = function() {
 				var _self = this;
-				_self.handel();
+				_self.handle();
 				if (opts.auto) {
 					_self.autoStart();
 				};
 			};
 
-			carousel.handel = function() {
+			/**
+			 * 处理DOM
+			 * @return {[type]} [description]
+			 */
+			carousel.handle = function() {
+				var _self = this;
 				$wrapperSub.css({
 					'width': cw * counts,
 					'-webkit-transform': 'translateX(0)'
@@ -51,19 +61,10 @@
 					'width': cw
 				});
 				if (opts.focus) {
-					var focusH = '<div class="focus">';
-					$slide.each(function(index, elem) {
-						if (index == 0) {
-							focusH += '<a href="javascript:;" class="active"></a>';
-						} else {
-							focusH += '<a href="javascript:;" ></a>';
-						}
-					})
-					focusH += '</div>';
-					$Element.append(focusH);
+					_self.point();
 				};
 				if (opts.arrow) {
-					$Element.append('<div class="prev"></div><div class="next"></div>');
+					_self.arrow();
 				};
 				if (typeof opts.callback === 'function') {
 					opts.callback(page, $slide[page]);
@@ -71,6 +72,10 @@
 				this.onEvent();
 			}
 
+			/**
+			 * 跳转下一步
+			 * @return {Function} [description]
+			 */
 			carousel.next = function() {
 				if (state) {
 					page++;
@@ -96,6 +101,10 @@
 				};
 			}
 
+			/**
+			 * 跳转上一步
+			 * @return {[type]} [description]
+			 */
 			carousel.prev = function() {
 				if (state) {
 					page--;
@@ -121,6 +130,11 @@
 
 			}
 
+			/**
+			 * 触摸开始时
+			 * @param  {[type]} event [description]
+			 * @return {[type]}       [description]
+			 */
 			carousel.touchStart = function(event) {
 				if (event.touches.length == 1) {
 					var touch = event.touches[0];
@@ -130,6 +144,11 @@
 				};
 			}
 
+			/**
+			 * 触摸移动中
+			 * @param  {[type]} event [description]
+			 * @return {[type]}       [description]
+			 */
 			carousel.touchMove = function(event) {
 				event.preventDefault();
 				if (event.touches.length == 1) {
@@ -182,6 +201,11 @@
 				};
 			}
 
+			/**
+			 * 触摸移开后
+			 * @param  {[type]} event [description]
+			 * @return {[type]}       [description]
+			 */
 			carousel.touchEnd = function(event) {
 				// 第一种写法：
 				if (direct == 'right') {
@@ -196,17 +220,10 @@
 				}
 			}
 
-			carousel.autoStart = function() {
-				var _self = this;
-				if (typeof opts.speed == 'string') {
-					opts.speed = 1000;
-				}
-				time = setInterval(_self.next, opts.speed);
-			}
-			carousel.stop = function() {
-				clearInterval(time);
-				time = null;
-			}
+			/**
+			 * 绑定轮播事件
+			 * @return {[type]} [description]
+			 */
 			carousel.onEvent = function() {
 				var _self = this;
 				$Element.find('.next').on('click ', _self.next);
@@ -214,6 +231,52 @@
 				$slide.on('touchstart', _self.touchStart);
 				$slide.on('touchmove', _self.touchMove);
 				$slide.on('touchend', _self.touchEnd);
+			}
+
+			/**
+			 * 是否自动轮播
+			 * @return {[type]} [description]
+			 */
+			carousel.autoStart = function() {
+				var _self = this;
+				if (typeof opts.speed == 'string') {
+					opts.speed = 1000;
+				}
+				time = setInterval(_self.next, opts.speed);
+			}
+
+			/**
+			 * 暂停轮播
+			 * @return {[type]} [description]
+			 */
+			carousel.stop = function() {
+				clearInterval(time);
+				time = null;
+			}
+
+			/**
+			 * 是否添加箭头
+			 * @return {[type]} [description]
+			 */
+			carousel.arrow = function() {
+				$Element.append('<div class="prev"></div><div class="next"></div>');
+			}
+
+			/**
+			 * 是否添加焦点
+			 * @return {[type]} [description]
+			 */
+			carousel.point = function() {
+				var _html = '<div class="focus">';
+				$slide.each(function(index, elem) {
+					if (index == 0) {
+						_html += '<a href="javascript:;" class="active"></a>';
+					} else {
+						_html += '<a href="javascript:;" ></a>';
+					}
+				})
+				_html += '</div>';
+				$Element.append(_html);
 			}
 
 			carousel.init();
