@@ -6,8 +6,8 @@
 ;
 (function($) {
 	$.fn.carousel = function(options) {
-		// 默认参数
 
+		// 默认参数
 		$.fn.carousel.defaults = {
 			auto: false, //是否播放true或者false;
 			speed: 3000, //播放速度;
@@ -78,14 +78,14 @@
 			 */
 			carousel.next = function() {
 				if (state) {
-					
-					
+
+
 					// if (page == counts) {
 					// 	page = 0;
 					// 	offsetX = 0;
 					// };
 					// 
-					if ( page != counts -1) {
+					if (page != counts - 1) {
 						page++;
 						// console.log(page)
 						offsetX = -page * cw;
@@ -105,12 +105,12 @@
 
 					}
 
-					if ( page == counts -1){
+					if (page == counts - 1) {
 						$Element.find('.next').hide();
 					}
 					$Element.find('.prev').show();
-					
-					
+
+
 				};
 			}
 
@@ -120,7 +120,7 @@
 			 */
 			carousel.prev = function() {
 				if (state) {
-					if ( page != 0) {
+					if (page != 0) {
 						page--;
 						offsetX = -page * cw;
 						$Element.find('.focus a').eq(page).addClass('active').siblings().removeClass('active');
@@ -139,15 +139,15 @@
 						}, delayT);
 					}
 
-					if ( page == 0){
+					if (page == 0) {
 						$Element.find('.prev').hide();
 					};
 					$Element.find('.next').show();
-					
+
 					// if (page == -1) {
 					// 	page = counts - 1;
 					// }
-					
+
 				}
 
 			}
@@ -234,7 +234,7 @@
 					// console.log(page)
 					if (page != 0) {
 						carousel.prev();
-					}else{
+					} else {
 						$wrapperSub.css({
 							'-webkit-transition': 'all 0.4s ease',
 							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
@@ -244,7 +244,7 @@
 					// carousel.next();
 					if (page != counts - 1) {
 						carousel.next();
-					}else{
+					} else {
 						$wrapperSub.css({
 							'-webkit-transition': 'all 0.4s ease',
 							'-webkit-transform': 'translateX(-' + page * cw + 'px) '
@@ -300,7 +300,7 @@
 				$Element.append('<div class="prev"></div><div class="next"></div>');
 				if (page == 0) {
 					$Element.find('.prev').hide();
-				} 
+				}
 			}
 
 			/**
