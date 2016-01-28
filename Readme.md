@@ -1,9 +1,9 @@
-Carousel ÎÄµµ
+Carousel æ–‡æ¡£
 ====================
-²å¼þËµÃ÷£º
+æ’ä»¶è¯´æ˜Žï¼š
 -
-´Ë²å¼þ¿ÉÓÃÓÚÄÚÈÝ¡¢Í¼Æ¬ÂÖ²¥£¬Ö§³Ö`ÒÆ¶¯¶Ë` ¡¢`PC¶Ë`£¬ÒýÈë `<Zepto.js> `»ò`<jQuery.js> `¼´¿É¡£
-DOM½á¹¹
+æ­¤æ’ä»¶å¯ç”¨äºŽå†…å®¹ã€å›¾ç‰‡è½®æ’­ï¼Œæ”¯æŒ`ç§»åŠ¨ç«¯` ã€`PCç«¯`ï¼Œå¼•å…¥ `<Zepto.js> `æˆ–`<jQuery.js> `å³å¯ã€‚
+DOMç»“æž„
 -
 	<div class="wrapper" id="wrapper">
 		<div class="wrapper-sub" >
@@ -22,7 +22,7 @@ DOM½á¹¹
 		</div>
 	</div>
 
-JSµ÷ÓÃ
+JSè°ƒç”¨
 -
 	$('#wrapper').carousel({
 		auto: true,
@@ -31,14 +31,14 @@ JSµ÷ÓÃ
 		...
 		callback: function(index,elem) {}
 	});
-²ÎÊýÅäÖÃ
+å‚æ•°é…ç½®
 -
 
-    auto:  false,    //ÊÇ·ñ²¥·Åtrue»òÕßfalse;
-	speed: 3000,    //²¥·ÅËÙ¶È;
-	arrow:false,    //ÊÇ·ñÌí¼Ó×óÓÒ¼ýÍ·
-	focus:true,     //ÊÇ·ñÌí¼ÓÔ²µã½¹µã
-	callback: ''    //»Øµ÷º¯Êý;
+    auto:  false,    //æ˜¯å¦æ’­æ”¾trueæˆ–è€…false;
+	speed: 3000,    //æ’­æ”¾é€Ÿåº¦;
+	arrow:false,    //æ˜¯å¦æ·»åŠ å·¦å³ç®­å¤´
+	focus:true,     //æ˜¯å¦æ·»åŠ åœ†ç‚¹ç„¦ç‚¹
+	callback: ''    //å›žè°ƒå‡½æ•°;
 
 
-¸Ã²å¼þ½ö¹©Ñ§Ï°£¬²»¶ÏÍêÉÆÖÐ¡£ÈçÓÐÎÊÌâÇëÁªÏµ `262281610@qq.com`
+è¯¥æ’ä»¶ä»…ä¾›å­¦ä¹ ï¼Œä¸æ–­å®Œå–„ä¸­ã€‚å¦‚æœ‰é—®é¢˜è¯·è”ç³»
