@@ -21,15 +21,15 @@
 		this.state = true ;
 		this.delay = null ;
 		this.delayT = 300 ;
-		this.pressX = 0 ;
-		this.pressY = 0 ;
+		this.pressX = null ;
+		this.pressY = null ;
 		this.direct = null ;
 		this.time = null ;
 		this.isScrolling = null ;
 
 		this.init(this.$element);
 	}
-	
+
 	/*初始化*/
 	Carousel.prototype.init = function($element) {
 		var _self = this;
