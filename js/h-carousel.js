@@ -15,7 +15,7 @@
 		this.$wrapperSub = $(element).find('.wrapper-sub');
 		this.$slide = this.$wrapperSub.find('.slide');
 		this.counts = this.$slide.length;
-		this.cw = $(window).width();
+		this.wrapperWidth = this.$element.width();
 		this.page = 0 ;
 		this.offsetX = 0 ;
 		this.state = true ;
@@ -32,11 +32,12 @@
 
 	/*初始化*/
 	Carousel.prototype.init = function($element) {
+
 		var _self = this;
+
 		_self.handle($element);
-		if (_self.options.auto) {
-			_self.autoStart();
-		};
+		_self.options.auto ? _self.autoStart() : '';
+		
 	};
 
 	/*处理DOM*/
@@ -45,27 +46,24 @@
 		var _self = this;
 	
 		_self.$wrapperSub.css({
-			'width': _self.cw * _self.counts,
+			'width': _self.wrapperWidth * _self.counts,
 			'-webkit-transform': 'translateX(0)'
 		});
 		_self.$slide.css({
-			'width': _self.cw
+			'width': _self.wrapperWidth
 		});
-		if (_self.options.focus) {
-			_self.point($element);
-		};
-		if (_self.options.arrow) {
-			_self.arrow($element);
-		};
+	
+		_self.options.focus ? _self.point($element) : '';
+		_self.options.arrow ? _self.arrow($element) : '';
+		
 		if (typeof _self.options.callback === 'function') {
 			_self.options.callback(_self.page, _self.$slide[_self.page]);
 		}
-		_self.onEvent($element);
+		_self.bindEvent($element);
 	}
 
 	/*跳转下一步*/
 	Carousel.prototype.next = function($element) {
-		console.log($element)
 		var _self = this;
 		if (_self.state) {
 
@@ -77,11 +75,11 @@
 			if (_self.page != _self.counts - 1) {
 				_self.page++;
 				// console.log(_self.page)
-				_self.offsetX = -_self.page * _self.cw;
+				_self.offsetX = -_self.page * _self.wrapperWidth;
 				$element.find('.focus a').eq(_self.page).addClass('active').siblings().removeClass('active');
 				_self.$wrapperSub.css({
 					'-webkit-transition': 'all 0.4s ease',
-					'-webkit-transform': 'translateX(-' + _self.page * _self.cw + 'px) '
+					'-webkit-transform': 'translateX(-' + _self.page * _self.wrapperWidth + 'px) '
 				})
 				if (typeof _self.options.callback === 'function') {
 					_self.options.callback(_self.page, _self.$slide[_self.page]);
@@ -111,12 +109,12 @@
 		if (_self.state) {
 			if (_self.page != 0) {
 				_self.page--;
-				_self.offsetX = -_self.page * _self.cw;
+				_self.offsetX = -_self.page * _self.wrapperWidth;
 				$element.find('.focus a').eq(_self.page).addClass('active').siblings().removeClass('active');
 
 				_self.$wrapperSub.css({
 					'-webkit-transition': 'all 0.4s ease',
-					'-webkit-transform': 'translateX(-' + _self.page * _self.cw + 'px) '
+					'-webkit-transform': 'translateX(-' + _self.page * _self.wrapperWidth + 'px) '
 				})
 				if (typeof _self.options.callback === 'function') {
 					_self.options.callback(_self.page, _self.$slide[_self.page]);
@@ -174,10 +172,10 @@
 							'-webkit-transition': 'all 0s ease',
 							'-webkit-transform': 'translateX(' + imgT + 'px) '
 						})
-						if (Math.abs(imgX) > _self.cw / 3) {
+						if (Math.abs(imgX) > _self.wrapperWidth / 3) {
 							_self.direct = "right"; //向右\
 
-						} else if (Math.abs(imgX) > _self.cw) {
+						} else if (Math.abs(imgX) > _self.wrapperWidth) {
 
 						} else {
 							_self.direct = '';
@@ -189,9 +187,9 @@
 							'-webkit-transform': 'translateX(' + imgT + 'px) '
 						})
 
-						if (Math.abs(imgX) > _self.cw / 3) {
+						if (Math.abs(imgX) > _self.wrapperWidth / 3) {
 							_self.direct = "left"; //向左
-						} else if (Math.abs(imgX) > _self.cw) {
+						} else if (Math.abs(imgX) > _self.wrapperWidth) {
 
 						} else {
 							_self.direct = '';
@@ -222,7 +220,7 @@
 			} else {
 				_self.$wrapperSub.css({
 					'-webkit-transition': 'all 0.4s ease',
-					'-webkit-transform': 'translateX(-' + _self.page * _self.cw + 'px) '
+					'-webkit-transform': 'translateX(-' + _self.page * _self.wrapperWidth + 'px) '
 				});
 			}
 		} else if (_self.direct == 'left') {
@@ -232,19 +230,19 @@
 			} else {
 				_self.$wrapperSub.css({
 					'-webkit-transition': 'all 0.4s ease',
-					'-webkit-transform': 'translateX(-' + _self.page * _self.cw + 'px) '
+					'-webkit-transform': 'translateX(-' + _self.page * _self.wrapperWidth + 'px) '
 				});
 			};
 		} else {
 			_self.$wrapperSub.css({
 				'-webkit-transition': 'all 0.4s ease',
-				'-webkit-transform': 'translateX(-' + _self.page * _self.cw + 'px) '
+				'-webkit-transform': 'translateX(-' + _self.page * _self.wrapperWidth + 'px) '
 			});
 		}
 	}
 
 	/*绑定轮播事件*/
-	Carousel.prototype.onEvent = function($element) {
+	Carousel.prototype.bindEvent = function($element) {
 		var _self = this;
 		$element.find('.next').on('click ', function(){
 			_self.next.call(_self,$element)
